@@ -9,19 +9,6 @@ big_font = pygame.font.SysFont('fonts/8-bit Arcade Out.ttf', 50)
 timer = pygame.time.Clock()
 fps = 60
 
-# main game loop
-run = True
-while run:
-    timer.tick(fps)
-    screen.fill('dark gray')
-
-    # event handling
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-              run = False
-
-    pygame.display.flip()
-pygame.quit()
             
  # chess pieces 
  # 8x8 board                
@@ -37,6 +24,8 @@ black_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight',
 black_locations = [(0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7),
                    (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6)]
 
+
+#captured pieces 
 captured_white_pieces  = []
 captured_black_pieces  = []
 
@@ -52,9 +41,16 @@ valid_moves = []
 
 
 # black pieces 
+
+#loading the piece 
 black_queen = pygame.image.load('assets/images/black queen.png')
-black_queen = pygame.transform.scale(black_queen, (80, 80))
+black_queen = pygame.transform.scale(black_queen, (80, 80)) # bigger version of the piece 
+
+# smaller version of the piece 
 black_queen_small = pygame.transform.scale(black_queen, (45, 45))
+
+
+# doing the same for the rest of the pieces
 black_king = pygame.image.load('assets/images/black king.png')
 black_king = pygame.transform.scale(black_king, (80, 80))
 black_king_small = pygame.transform.scale(black_king, (45, 45))
@@ -94,6 +90,58 @@ white_pawn_small = pygame.transform.scale(white_pawn, (45, 45))
 
 
 
+#lists 
+white_images = [white_pawn, white_queen, white_king, white_knight, white_rook, white_bishop]
+small_white_images = [white_pawn_small, white_queen_small, white_king_small, white_knight_small,
+                      white_rook_small, white_bishop_small]
+
+
+black_images = [black_pawn, black_queen, black_king, black_knight, black_rook, black_bishop]
+small_black_images = [black_pawn_small, black_queen_small, black_king_small, black_knight_small,
+                      black_rook_small, black_bishop_small]
+
+
+piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
+
+
+def draw_board():
+    for i in range(32): #representing the 32 squares of the board that need to be drawn.
+        column = i % 4 #calculates the column (0 to 3) for the square.
+        row = i // 4 #calculates the row (0 to 7) for the square.
+        #ensures that the light gray squares alternate correctly on the board
+        if row % 2 == 0:
+            pygame.draw.rect(screen, 'light gray', [600 - (column * 200), row * 100, 100, 100])
+        else:
+            pygame.draw.rect(screen, 'light gray', [700 - (column * 200), row * 100, 100, 100])
+        pygame.draw.rect(screen, 'gray', [0, 800, WIDTH, 100]) #gray rectangle-bottom of the screen 
+        pygame.draw.rect(screen, 'gold', [0, 800, WIDTH, 100], 5) #gold border-gray rectangle
+        pygame.draw.rect(screen, 'gold', [800, 0, 200, HEIGHT], 5) #gold border-right side of the screen
+        #message corresponding to the current game phase is rendered 
+        status_text = ['White: Select a Piece to Move!', 'White: Select a Destination!',
+                       'Black: Select a Piece to Move!', 'Black: Select a Destination!']
+        screen.blit(big_font.render(status_text[game_phase], True, 'black'), (20, 820))
+
+        #drawing grid lines
+        for i in range(9):
+            pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)
+            pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
+
+        #displays forfeit button   
+        screen.blit(big_font.render('FORFEIT', True, 'black'), (810, 830))
 
 
 
+# main game loop
+run = True
+while run:
+    timer.tick(fps)
+    screen.fill('dark gray')
+    draw_board()
+
+    # event handling
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+              run = False
+
+    pygame.display.flip()
+pygame.quit()
