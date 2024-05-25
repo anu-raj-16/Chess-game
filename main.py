@@ -110,12 +110,12 @@ def draw_board():
         row = i // 4 #calculates the row (0 to 7) for the square.
         #ensures that the light gray squares alternate correctly on the board
         if row % 2 == 0:
-            pygame.draw.rect(screen, 'light gray', [600 - (column * 200), row * 100, 100, 100])
+            pygame.draw.rect(screen, 'light pink', [600 - (column * 200), row * 100, 100, 100])
         else:
-            pygame.draw.rect(screen, 'light gray', [700 - (column * 200), row * 100, 100, 100])
-        pygame.draw.rect(screen, 'gray', [0, 800, WIDTH, 100]) #gray rectangle-bottom of the screen 
-        pygame.draw.rect(screen, 'gold', [0, 800, WIDTH, 100], 5) #gold border-gray rectangle
-        pygame.draw.rect(screen, 'gold', [800, 0, 200, HEIGHT], 5) #gold border-right side of the screen
+            pygame.draw.rect(screen, 'light pink', [700 - (column * 200), row * 100, 100, 100])
+        pygame.draw.rect(screen, 'light pink', [0, 800, WIDTH, 100]) #gray rectangle-bottom of the screen 
+        pygame.draw.rect(screen, 'white', [0, 800, WIDTH, 100], 5) #gold border-gray rectangle
+        pygame.draw.rect(screen, 'white', [800, 0, 200, HEIGHT], 5) #gold border-right side of the screen
         #message corresponding to the current game phase is rendered 
         status_text = ['White: Select a Piece to Move!', 'White: Select a Destination!',
                        'Black: Select a Piece to Move!', 'Black: Select a Destination!']
@@ -123,8 +123,8 @@ def draw_board():
 
         #drawing grid lines
         for i in range(9):
-            pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)
-            pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
+            pygame.draw.line(screen, 'white', (0, 100 * i), (800, 100 * i), 2)
+            pygame.draw.line(screen, 'white', (100 * i, 0), (100 * i, 800), 2)
 
         #displays forfeit button   
         screen.blit(big_font.render('FORFEIT', True, 'black'), (810, 830))
@@ -135,7 +135,7 @@ def draw_board():
 run = True
 while run:
     timer.tick(fps)
-    screen.fill('dark gray')
+    screen.fill('magenta')
     draw_board()
 
     # event handling
