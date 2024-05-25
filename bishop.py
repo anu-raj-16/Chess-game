@@ -2,7 +2,7 @@ class Bishop():
     # check valid bishop moves
     def check_bishop(position, color):
         moves_list = []
-        if color == 'while':
+        if color == 'white':
             enemies_list = black_locations
             friends_list = white_locations
         else:
