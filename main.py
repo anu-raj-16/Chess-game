@@ -34,7 +34,7 @@ captured_black_pieces  = []
 # 2 - black's turn, no selection
 # 3 - black's turn, piece selected
 game_phase = 0 # to check which phase the piece is in 
-selection = 100 
+selection = 10
 valid_moves = []
 
 # game pieces : queen, king, bishop, knight, pawn 
@@ -138,7 +138,10 @@ def draw_pieces():
             screen.blit(white_pawn, (white_locations[i][0] * 100 + 22, white_locations[i][1] * 100 + 30))
         else:
             screen.blit(white_images[index], (white_locations[i][0] * 100 + 10, white_locations[i][1] * 100 + 10))
-
+        if game_phase < 2:
+            if selection == i:
+                pygame.draw.rect(screen, 'red', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 100 + 1,
+                                                 100, 100], 2)
     for i in range(len(black_pieces)):
         index = piece_list.index(black_pieces[i])
         # stores the index of the piece (taken from the list black_pieces) in the piece_list
@@ -146,7 +149,10 @@ def draw_pieces():
             screen.blit(black_pawn, (black_locations[i][0] * 100 + 22, black_locations[i][1] * 100 + 30))
         else:
             screen.blit(black_images[index], (black_locations[i][0] * 100 + 10, black_locations[i][1] * 100 + 10))
-
+        if game_phase >= 2:
+            if selection == i:
+                pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1,
+                                                 100, 100], 2)
             
 # main game loop
 run = True
