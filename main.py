@@ -131,14 +131,16 @@ def draw_board():
 
 # draw pieces onto board
 def draw_pieces():
-    for i in range(len(white_pieces)):
+    for i in range(len(white_pieces)): # we do not write 16 because the pieces might get eliminated in the midst of the game
         index = piece_list.index(white_pieces[i])
         # stores the index of the piece (taken from the list white_pieces) in the piece_list
         if white_pieces[i] == "pawn":
             screen.blit(white_pawn, (white_locations[i][0] * 100 + 22, white_locations[i][1] * 100 + 30))
+            # we're typing in the position of the pawn separately as it is smaller than the rest of the pieces
         else:
             screen.blit(white_images[index], (white_locations[i][0] * 100 + 10, white_locations[i][1] * 100 + 10))
-        if game_phase < 2:
+        if game_phase < 2: # this is to highlight the piece selected by the user. If game pahse is less than two, 
+                           # it is the whtie player's turn.
             if selection == i:
                 pygame.draw.rect(screen, 'red', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 100 + 1,
                                                  100, 100], 2)
@@ -153,7 +155,25 @@ def draw_pieces():
             if selection == i:
                 pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1,
                                                  100, 100], 2)
-            
+
+# check for valid moves for just selected piece
+def check_valid_moves():
+    if game_phase < 2:
+        options_list = white_options
+    else:
+        options_list = black_options
+    valid_options = options_list[selection]
+    return valid_options
+
+# draw valid moves on screen
+def draw_valid(moves):
+    if game_phase < 2:
+        color = 'red'
+    else:
+        color = 'blue'
+    for i in range (len(moves)):
+        pygame.draw.circle(screen, color, (moves[i][0] * 100 + 50, moves[i][1] * 100 + 50, 5))
+
 # main game loop
 run = True
 while run:
@@ -161,6 +181,9 @@ while run:
     screen.fill('dark gray')
     draw_board()
     draw_pieces()
+    if selection != 100:
+        valid_moves = check_valid_moves()
+        draw_valid(valid_moves)
 
 
     # event handling

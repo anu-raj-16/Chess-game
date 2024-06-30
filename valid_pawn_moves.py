@@ -25,7 +25,7 @@ class ValidPawnMoves():
                  position[1] == 6:
                 moves_list.append((position[0], position[1] - 2))
             if (position[0] + 1, position[1] - 1) in white_locations:
-                moves_list.append((position[0] + 1, position[1] + 1))
+                moves_list.append((position[0] + 1, position[1] - 1))
             if (position[0] - 1, position[1] - 1) in white_locations:
-                moves_list.append((position[0] - 1, position[1] + 1))
+                moves_list.append((position[0] - 1, position[1] - 1))
         return moves_list
